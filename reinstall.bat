@@ -50,7 +50,7 @@ mkdir "%INSTALL_DIR%" 2>nul
 
 echo • Pobieram EXE:
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-    "Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%EXE_PATH%'"
+    "Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%EXE_PATH%' -SkipCertificateCheck"
 if not exist "%EXE_PATH%" (
     echo ✗ Blad: plik nie zostal pobrany.  Koncze.
     goto :EOF
