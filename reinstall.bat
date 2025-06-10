@@ -55,7 +55,7 @@ if not exist "%EXE_PATH%" (
     echo ✗ Blad: plik nie zostal pobrany.  Koncze.
     goto :EOF
 )
-
+rem t
 echo  Usuwam stara usluge (jesli byla)...
 sc delete "%SERVICE_NAME%" >nul 2>&1
 ping 127.0.0.1 -n 3 >nul
