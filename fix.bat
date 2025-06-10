@@ -28,13 +28,13 @@ if %errorlevel%==0 (
             goto :EOF
         ) else (
             echo  Usluga ma poprawna sciezke, lecz jest w stanie !STATE!.  Probuje ja uruchomic...
-            net start "%SERVICE_NAME%" && echo ✓ Usluga uruchomiona. && goto :EOF
-            echo ✗ Nie udalo sie uruchomic – reinstalacja.
+            net start "%SERVICE_NAME%" && echo  Usluga uruchomiona. && goto :EOF
+            echo  Nie udalo sie uruchomic – reinstalacja.
         )
     ) else (
-        echo ✗ Sciezka binarna NIEZGODNA:
+        echo  Sciezka binarna NIEZGODNA:
         echo    !BIN_PATH!
-        echo    ↳ Oczekiwano: "%EXE_PATH% -m svc"
+        echo     Oczekiwano: "%EXE_PATH% -m svc"
         echo    Przeinstaluje usluge.
     )
 ) else (
@@ -52,7 +52,7 @@ echo  Pobieram EXE:
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
     "Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%EXE_PATH%'"
 if not exist "%EXE_PATH%" (
-    echo ✗ Blad: plik nie zostal pobrany.  Koncze.
+    echo  Blad: plik nie zostal pobrany.  Koncze.
     goto :EOF
 )
 rem t
@@ -69,7 +69,7 @@ sc create "%SERVICE_NAME%" ^
 
 echo  Uruchamiam usluge...
 net start "%SERVICE_NAME%"
-if %errorlevel%==0 (echo ✓ Usluga uruchomiona pomyslnie.) else (echo ✗ Nie udalo sie uruchomic!)
+if %errorlevel%==0 (echo  Usluga uruchomiona pomyslnie.) else (echo  Nie udalo sie uruchomic!)
 
 echo.
 echo ==== [TacticalRMM] Gotowe ====
