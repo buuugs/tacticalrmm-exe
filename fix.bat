@@ -21,18 +21,26 @@ if %errorlevel%==0 (
     set "BIN_PATH=!BIN_PATH:~1!"  rem usuń wiodącą spację
 
     if /i "!BIN_PATH!"=="\"%EXE_PATH%\" -m svc" (
-        rem ——— Ścieżka jest OK – sprawdź stan (Running / Stopped) —
-        for /f "tokens=3" %%a in ('sc query "%SERVICE_NAME%" ^| findstr /i "STATE"') do set "STATE=%%a"
-        if /i "!STATE!"=="RUNNING" (
-            echo  Usługa działa i ma poprawną ścieżkę. Nic do zrobienia.
-            goto :EOF
-        ) else if "!STATE!"=="4" (
-            echo  Usługa działa (kod 4) i ma poprawną ścieżkę. Nic do zrobienia.
-            goto :EOF
-        ) else (
-            echo  Usługa ma poprawną ścieżkę, lecz jest w stanie !STATE!.  Próbuję ją uruchomić...
-            net start "%SERVICE_NAME%" && echo  Usługa uruchomiona. && goto :EOF
-            echo  Nie udało się uruchomić – reinstalacja.
+rem ——— Ścieżka jest OK – sprawdź stan (Running / Stopped) —
+for /f "tokens=3" %%a in ('sc query "%SERVICE_NAME%" ^| findstr /i "STATE"') do set "STATE=%%a"
+
+if /i "!STATE!"=="RUNNING" (
+    echo  Usługa działa i ma poprawną ścieżkę. Nic do zrobienia.
+    goto :EOF
+)
+
+if "!STATE!"=="4" (
+    echo  Usługa działa (kod 4) i ma poprawną ścieżkę. Nic do zrobienia.
+    goto :EOF
+)
+
+echo  Usługa ma poprawną ścieżkę, lecz jest w stanie !STATE!.  Próbuję ją uruchomić...
+net start "%SERVICE_NAME%" && (
+    echo  Usługa uruchomiona.
+    goto :EOF
+)
+echo  Nie udało się uruchomić – reinstalacja.
+
         )
     ) else (
         echo  Ścieżka binarna NIEZGODNA:
