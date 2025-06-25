@@ -11,35 +11,39 @@ set "DOWNLOAD_URL=https://github.com/buuugs/tacticalrmm-exe/releases/download/sd
 echo.
 echo ==== [TacticalRMM] Sprawdzanie stanu uslugi "%SERVICE_NAME%" ====
 
-rem ——— Czy usluga istnieje? ——————————————————————
+rem ——— Czy usługa istnieje? ——————————————————————
 sc query "%SERVICE_NAME%" >nul 2>&1
 if %errorlevel%==0 (
-    echo  Usluga istnieje – sprawdzam poprawnosc konfiguracji...
+    echo  Usługa istnieje – sprawdzam poprawność konfiguracji...
 
-    rem Pobierz pelna binarna sciezke
+    rem Pobierz pełną binarną ścieżkę
     for /f "tokens=2*" %%a in ('sc qc "%SERVICE_NAME%" ^| findstr /i "BINARY_PATH_NAME"') do set "BIN_PATH=%%b"
-    set "BIN_PATH=!BIN_PATH:~1!"  rem usun wiodaca spacje
+    set "BIN_PATH=!BIN_PATH:~1!"  rem usuń wiodącą spację
 
     if /i "!BIN_PATH!"=="\"%EXE_PATH%\" -m svc" (
-        rem –—— Ścieżka jest OK – sprawdź stan (Running / Stopped) —
+        rem ——— Ścieżka jest OK – sprawdź stan (Running / Stopped) —
         for /f "tokens=3" %%a in ('sc query "%SERVICE_NAME%" ^| findstr /i "STATE"') do set "STATE=%%a"
         if /i "!STATE!"=="RUNNING" (
-            echo  Usluga dziala i ma poprawna sciezke. Nic do zrobienia.
+            echo  Usługa działa i ma poprawną ścieżkę. Nic do zrobienia.
+            goto :EOF
+        ) else if "!STATE!"=="4" (
+            echo  Usługa działa (kod 4) i ma poprawną ścieżkę. Nic do zrobienia.
             goto :EOF
         ) else (
-            echo  Usluga ma poprawna sciezke, lecz jest w stanie !STATE!.  Probuje ja uruchomic...
-            net start "%SERVICE_NAME%" && echo  Usluga uruchomiona. && goto :EOF
-            echo  Nie udalo sie uruchomic – reinstalacja.
+            echo  Usługa ma poprawną ścieżkę, lecz jest w stanie !STATE!.  Próbuję ją uruchomić...
+            net start "%SERVICE_NAME%" && echo  Usługa uruchomiona. && goto :EOF
+            echo  Nie udało się uruchomić – reinstalacja.
         )
     ) else (
-        echo  Sciezka binarna NIEZGODNA:
+        echo  Ścieżka binarna NIEZGODNA:
         echo    !BIN_PATH!
         echo     Oczekiwano: "%EXE_PATH% -m svc"
-        echo    Przeinstaluje usluge.
+        echo    Przeinstaluję usługę.
     )
 ) else (
-    echo  Usluga nie istnieje – przechodze do instalacji.
+    echo  Usługa nie istnieje – przechodzę do instalacji.
 )
+
 
 rem ——— Instalacja / reinstalacja ————————————————————
 echo.
