@@ -1,5 +1,4 @@
 @echo off
-rem === TacticalRMM Agent installer/updater ==========================
 setlocal enabledelayedexpansion
 
 rem ——— Konfiguracja ————————————————————————————
@@ -21,27 +20,25 @@ if %errorlevel%==0 (
     set "BIN_PATH=!BIN_PATH:~1!"  rem usuń wiodącą spację
 
     if /i "!BIN_PATH!"=="\"%EXE_PATH%\" -m svc" (
-rem ——— Ścieżka jest OK – sprawdź stan (Running / Stopped) —
-for /f "tokens=3" %%a in ('sc query "%SERVICE_NAME%" ^| findstr /i "STATE"') do set "STATE=%%a"
+        rem ——— Ścieżka jest OK – sprawdź stan (Running / Stopped) —
+        for /f "tokens=3" %%a in ('sc query "%SERVICE_NAME%" ^| findstr /i "STATE"') do set "STATE=%%a"
 
-if /i "!STATE!"=="RUNNING" (
-    echo  Usługa działa i ma poprawną ścieżkę. Nic do zrobienia.
-    goto :EOF
-)
-
-if "!STATE!"=="4" (
-    echo  Usługa działa (kod 4) i ma poprawną ścieżkę. Nic do zrobienia.
-    goto :EOF
-)
-
-echo  Usługa ma poprawną ścieżkę, lecz jest w stanie !STATE!.  Próbuję ją uruchomić...
-net start "%SERVICE_NAME%" && (
-    echo  Usługa uruchomiona.
-    goto :EOF
-)
-echo  Nie udało się uruchomić – reinstalacja.
-
+        if /i "!STATE!"=="RUNNING" (
+            echo  Usługa działa i ma poprawną ścieżkę. Nic do zrobienia.
+            goto :EOF
         )
+
+        if "!STATE!"=="4" (
+            echo  Usługa działa (kod 4) i ma poprawną ścieżkę. Nic do zrobienia.
+            goto :EOF
+        )
+
+        echo  Usługa ma poprawną ścieżkę, lecz jest w stanie !STATE!.  Próbuję ją uruchomić...
+        net start "%SERVICE_NAME%" && (
+            echo  Usługa uruchomiona.
+            goto :EOF
+        )
+        echo  Nie udało się uruchomić – reinstalacja.
     ) else (
         echo  Ścieżka binarna NIEZGODNA:
         echo    !BIN_PATH!
@@ -51,7 +48,6 @@ echo  Nie udało się uruchomić – reinstalacja.
 ) else (
     echo  Usługa nie istnieje – przechodzę do instalacji.
 )
-
 
 rem ——— Instalacja / reinstalacja ————————————————————
 echo.
@@ -67,21 +63,25 @@ if not exist "%EXE_PATH%" (
     echo  Blad: plik nie zostal pobrany.  Koncze.
     goto :EOF
 )
-rem t
-echo  Usuwam stara usluge (jesli byla)...
+
+echo  Usuwam starą usługę (jeśli była)...
 sc delete "%SERVICE_NAME%" >nul 2>&1
 ping 127.0.0.1 -n 3 >nul
 
-echo  Rejestruje nowa usluge...
+echo  Rejestruje nową usługę...
 sc create "%SERVICE_NAME%" ^
     binPath= "\"%EXE_PATH%\" -m svc" ^
     start= auto ^
     DisplayName= "TacticalRMM Agent Service" ^
     error= ignore
 
-echo  Uruchamiam usluge...
+echo  Uruchamiam usługę...
 net start "%SERVICE_NAME%"
-if %errorlevel%==0 (echo  Usluga uruchomiona pomyslnie.) else (echo  Nie udalo sie uruchomic!)
+if %errorlevel%==0 (
+    echo  Usługa uruchomiona pomyślnie.
+) else (
+    echo  Nie udało się uruchomić!
+)
 
 echo.
 echo ==== [TacticalRMM] Gotowe ====
