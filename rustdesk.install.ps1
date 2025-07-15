@@ -7,15 +7,6 @@ $rustdesk_pw = "Tohaslomozezostaczmienione1"
 $rustdesk_cfg = "0nI9QTcw8EchR2QTpFN1RkZppHanNzci1WdpZnT0oUU0x0KlhnQrUVdykmWjNlI6ISeltmIsICbw5Cc19mcnNTbus2clRGdzVncv8iOzBHd0hmI6ISawFmIsICbw5Cc19mcnNTbus2clRGdzVnciojI5FGblJnIsICbw5Cc19mcnNTbus2clRGdzVnciojI0N3boJye"
 
 ################################## Please Do Not Edit Below This Line #########################################
-
-# Run as administrator and stays in the current directory
-if (-Not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
-        Start-Process PowerShell -Verb RunAs -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"cd '$pwd'; & '$PSCommandPath';`"";
-        Exit;
-    }
-}
-
 $Downloadlink = "https://rustdesk.m3group.pl/download/m3group.exe"
 
 if (!(Test-Path C:\Temp)) {
