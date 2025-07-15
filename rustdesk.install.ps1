@@ -1,8 +1,5 @@
 $ErrorActionPreference = 'silentlycontinue'
 
-# Assign the value random password to the password variable
-$rustdesk_pw = "Tohaslomozezostaczmienione1"
-
 # Get your config string from your Web portal and Fill Below
 $rustdesk_cfg = "0nI9QTcw8EchR2QTpFN1RkZppHanNzci1WdpZnT0oUU0x0KlhnQrUVdykmWjNlI6ISeltmIsICbw5Cc19mcnNTbus2clRGdzVncv8iOzBHd0hmI6ISawFmIsICbw5Cc19mcnNTbus2clRGdzVnciojI5FGblJnIsICbw5Cc19mcnNTbus2clRGdzVnciojI0N3boJye"
 
@@ -50,7 +47,6 @@ Set-Location 'Pomoc zdalna M3 Group'
 
 & ".\Pomoc zdalna M3 Group.exe" --get-id | Write-Output -OutVariable rustdesk_id
 & ".\Pomoc zdalna M3 Group.exe" --config $rustdesk_cfg
-& ".\Pomoc zdalna M3 Group.exe" --password $rustdesk_pw
 
 # Uruchomienie jako aplikacja GUI dla aktywnego użytkownika
 Start-Process ".\Pomoc zdalna M3 Group.exe" --run
