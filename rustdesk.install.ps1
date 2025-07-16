@@ -10,7 +10,7 @@ $ProgramFolder = "$env:ProgramFiles\Pomoc zdalna M3 Group"
 $ExePath = Join-Path $ProgramFolder "Pomoc zdalna M3 Group.exe"
 
 # If RustDesk is already installed, skip
-if (Test-Path $ExePath -and (Get-Service -Name $ServiceName -ErrorAction SilentlyContinue)) {
+if ((Test-Path $ExePath) -and (Get-Service -Name $ServiceName -ErrorAction SilentlyContinue)) {
     Write-Host "RustDesk (Pomoc zdalna M3 Group) is already installed. Skipping installation."
 } else {
     # Download and install
