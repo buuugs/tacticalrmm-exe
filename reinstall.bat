@@ -6,7 +6,7 @@ rem ——— Konfiguracja —————————————————�
 set "SERVICE_NAME=tacticalrmm"
 set "INSTALL_DIR=C:\Program Files\TacticalAgent"
 set "EXE_PATH=%INSTALL_DIR%\tacticalrmm.exe"
-set "DOWNLOAD_URL=https://github.com/buuugs/tacticalrmm-exe/releases/download/sda/tacticalrmm.exe"
+set "DOWNLOAD_URL=https://github.com/buuugs/tacticalrmm-exe/releases/download/2.0.10/tacticalrmm.exe"
 
 echo.
 echo ==== [TacticalRMM] Sprawdzanie stanu uslugi "%SERVICE_NAME%" ====
