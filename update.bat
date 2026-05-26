@@ -8,12 +8,12 @@ set "SERVICE_NAME=tacticalrmm"
 set "INSTALL_DIR=C:\Program Files\TacticalAgent"
 set "EXE_PATH=%INSTALL_DIR%\tacticalrmm.exe"
 set "BACKUP_PATH=%INSTALL_DIR%\tacticalrmm.exe.bak"
-set "DOWNLOAD_URL=https://github.com/buuugs/tacticalrmm-exe/releases/download/sda/tacticalrmm.exe"
+set "DOWNLOAD_URL=https://github.com/buuugs/tacticalrmm-exe/releases/download/2.0.10/tacticalrmm.exe"
 set "STAGE_DIR=C:\ProgramData\TacticalRMM"
 set "TEMP_PATH=%STAGE_DIR%\tacticalrmm_new.exe"
 
 echo.
-echo ==== [TacticalRMM] Manualny update agenta v4 ====
+echo ==== [TacticalRMM] Manualny update agenta v5 ====
 echo.
 
 net session >nul 2>&1
